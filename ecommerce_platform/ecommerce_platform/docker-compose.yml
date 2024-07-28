@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgresql_database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=productDb
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin1234
+    ports:
+      - '2020:80'
+    volumes:
+      - pgadmin:/root/.pgadmin
+
+  user_management:
+    container_name: user_management_container_compose
+    image: user_management
+    ports:
+      - "3030:5000"
+    networks:
+      - ecommerce_network
+
+  product_catalog:
+    container_name: product_catalog_container_compose
+    image: product_catalog
+    ports:
+      - "3031:5000"
+    networks:
+      - ecommerce_network
+
+  cart_management:
+    container_name: cart_management_container_compose
+    image: cart_management
+    ports:
+      - "3032:5000"
+    networks:
+      - ecommerce_network
+
+  app2:
+    container_name: app2_container
+    image: app2
+    ports:
+      - "8000:8000"  # Map container port 8000 to host port 8000
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./app2_code:/app2
+
+networks:
+  ecommerce_network:
+    driver: bridge
+
+volumes:
+  database-data:
+  pgadmin:

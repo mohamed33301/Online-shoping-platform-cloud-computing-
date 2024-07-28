@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-management
+spec:
+  replicas: 3  
+  selector:
+    matchLabels:
+      app: cart-management
+  template:
+    metadata:
+      labels:
+        app: cart-management
+    spec:
+      containers:
+      - name: cart-management
+        image: mohamed776/cart_management
+        ports:
+        - containerPort: 5000
+

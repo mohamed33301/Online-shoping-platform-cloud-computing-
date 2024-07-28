@@ -1,0 +1,44 @@
+docker start user_management_container
+docker logs user_management_container
+docker run --name user_management_container -d -p 5000:5000 user_management
+docker build -t user_management .
+docker stop user_management_container
+docker rm user_management_container
+docker run --name product_catalog_container -d -p 5001:5000 product_catalog
+docker run --name cart_management_container -d -p 5002:5000 cart_management
+docker build -t product_catalog .
+docker build -t cart_management .
+docker start product_catalog_container
+
+docker start cart_management_container
+http://localhost:5000
+kubectl apply -f kubernetes/user-management/deployment.yaml
+kubectl apply -f kubernetes/user-management/service.yaml
+kubectl apply -f kubernetes/product-catalog/deployment.yaml
+kubectl apply -f kubernetes/product-catalog/service.yaml
+kubectl apply -f kubernetes/cart-management/deployment.yaml
+kubectl apply -f kubernetes/cart-management/service.yaml
+docker network inspect ecommerce_platform_ecommerce_network
+docker-compose up
+curl http://10.105.117.103:5000
+curl http://10.97.48.86:5001
+curl http://10.101.190.8:5002
+kubectl get services
+systemctl status jenkins
+http://10.0.2.15:8080
+sudo nano /var/lib/jenkins/secrets/initialAdminPassword
+http://10.0.2.15:8080/job/e-commerce/configure
+docker build -t app2 .
+kubectl delete deployment user-management
+kubectl delete service user-management
+kubectl delete deployment product-catalog
+kubectl delete service  product-catalog
+kubectl delete deployment cart-management
+kubectl delete service cart-management
+http://localhost:8000/accounts/login/manager/
+manager@example.com
+managerpass1234
+http://localhost:3030/
+http://localhost:3031/
+http://localhost:3032/
+http://localhost:8000/
